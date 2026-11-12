@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Crear nueva clase C++",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/.vscode/crear_clase.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Compilar C++",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "$files = Get-ChildItem . -Filter '*.cpp' -File -Recurse | ForEach-Object { (Resolve-Path -Relative $_.FullName) }; New-Item -ItemType Directory -Force '${workspaceFolder}\\bin' | Out-Null; & 'C:\\msys64\\ucrt64\\bin\\g++.exe' -g -std=c++17 -fdiagnostics-color=always $files -o '${workspaceFolder}\\bin\\main.exe'; exit $LASTEXITCODE"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\src\\source"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            }
+        },
+    ]
+}
